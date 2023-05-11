@@ -1,0 +1,281 @@
+{% extends 'blood/adminbase.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #content main .head-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        grid-gap: 16px;
+        flex-wrap: wrap;
+      }
+      #content main .head-title .left h1 {
+        font-size: 36px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--dark);
+      }
+
+      /* =====MID-SECTION====== */
+      .ag-format-container {
+        margin: 0 auto;
+      }
+      .ag-courses_box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 50px 0;
+      }
+
+      .ag-courses_item {
+        flex-basis: calc(45.33% - 205px);
+
+        margin: 0 15px 30px;
+
+        overflow: hidden;
+
+        border-radius: 28px;
+      }
+
+      .ag-courses-item_link {
+        display: block;
+        padding: 30px 20px;
+        background-color: #121212;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .ag-courses-item_link:hover,
+      .ag-courses-item_link:hover .ag-courses-item_date {
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .ag-courses-item_link:hover .ag-courses-item_bg {
+        -webkit-transform: scale(10);
+        -ms-transform: scale(10);
+        transform: scale(10);
+      }
+
+      .ag-courses-item_title {
+        min-height: 87px;
+        margin: 0 0 25px;
+
+        overflow: hidden;
+
+        font-weight: bold;
+        font-size: 2.5rem;
+        color: #fff;
+
+        z-index: 2;
+        position: relative;
+      }
+
+      .ag-courses-item_date-box {
+        font-size: 18px;
+        color: #fff;
+
+        z-index: 2;
+        position: relative;
+      }
+
+      .ag-courses-item_date {
+        font-weight: bold;
+        color: #f9b234;
+
+        -webkit-transition: color 0.5s ease;
+        -o-transition: color 0.5s ease;
+        transition: color 0.5s ease;
+      }
+
+      .ag-courses-item_bg {
+        height: 128px;
+        width: 128px;
+
+        z-index: 1;
+        position: absolute;
+        top: -75px;
+        right: -75px;
+
+        border-radius: 50%;
+
+        -webkit-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+      }
+
+      .cardLogoAdmin{
+        font-size: 3rem;
+      }
+
+      @media only screen and (max-width: 979px) {
+        .ag-courses_item {
+          -ms-flex-preferred-size: calc(50% - 30px);
+          flex-basis: calc(50% - 30px);
+        }
+
+        .ag-courses-item_title {
+          font-size: 24px;
+        }
+      }
+
+      @media only screen and (max-width: 767px) {
+        .ag-format-container {
+          width: 96%;
+        }
+      }
+
+      @media only screen and (max-width: 639px) {
+        .ag-courses_item {
+          -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
+        }
+
+        .ag-courses-item_title {
+          min-height: 72px;
+          line-height: 1;
+
+          font-size: 24px;
+        }
+
+        .ag-courses-item_link {
+          padding: 22px 40px;
+        }
+
+        .ag-courses-item_date-box {
+          font-size: 16px;
+        }
+      }
+
+      /* ===========BOTTOM-ICON============= */
+      #BottomIcon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #BottomTitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        font-size: 14.3px;
+      }
+
+      
+    </style>
+  </head>
+  <body>
+    <!-- ===TOP-SECTION==== -->
+    <div class="head-title">
+      <div class="left">
+        <h1>Dashboard</h1>
+      </div>
+    </div>
+    <!-- ===MID_SECTION==== -->
+    <div class="ag-format-container">
+      <div class="ag-courses_box" id="upper-Boxes">
+        <!-- code injected here -->
+      </div>
+    </div>
+    <!-- ====BOTTOM_SECTION=== -->
+    <div class="ag-format-container">
+      <div class="ag-courses_box bottomBoxes" id="bottom-Boxes">
+        <!-- code injected here -->
+      </div>
+    </div>
+
+    <script>
+      const bloodTypes = [
+        { type: "A+", unit: "{{A1.unit}}", color: "#3ecd5e" },
+        { type: "B+", unit: "{{B1.unit}}", color: "#e44002" },
+        { type: "O+", unit: "{{O1.unit}}", color: "#952aff" },
+        { type: "AB+", unit: "{{AB1.unit}}", color: "#27E1C1" },
+        { type: "A-", unit: "{{A2.unit}}", color: "#EA5455" },
+        { type: "B-", unit: "{{B2.unit}}", color: "#0A2647" },
+        { type: "O-", unit: "{{O2.unit}}", color: "#5D6D7E" },
+        { type: "AB-", unit: "{{AB2.unit}}", color: "#FFAC41" },
+      ];
+
+      const bloodTypesList = document.querySelector("#upper-Boxes");
+
+      const bloodTypesHtml = bloodTypes
+        .map(
+          (bloodType) => `
+<div class="ag-courses_item">
+      <a href="#" class="ag-courses-item_link">
+        <div class="ag-courses-item_bg" style="background-color: ${bloodType.color};"></div>
+
+        <div class="ag-courses-item_title">${bloodType.type}</div>
+
+        <div class="ag-courses-item_date-box">
+          Unit: <span class="ag-courses-item_date">${bloodType.unit}</span>
+        </div>
+      </a>
+    </div>
+  `
+        )
+        .join("");
+
+      bloodTypesList.innerHTML = bloodTypesHtml;
+      
+      // =====BOTTOM SECTION======
+      const BottomData = [
+        {
+          icon: "<i class='cardLogoAdmin bx bxs-user'></i>",
+          color: "#C84B31",
+          title: " Total Donors",
+          number: "{{totaldonors}}",
+        },
+        {
+          icon: "<i class='cardLogoAdmin bx bxs-time'></i>",
+          color: "#BA90C6",
+          title: " Total Requests",
+          number: "{{totalrequest}}",
+        },
+        {
+          icon: "<i class='cardLogoAdmin bx bxs-check-circle'></i>",
+          color: "#647E68",
+          title: "  Approved Requests",
+          number: "{{totalapprovedrequest}}",
+        },
+        {
+          icon: "<i class='cardLogoAdmin bx bxs-droplet'></i>",
+          color: "#D27685",
+          title: "Total Blood Unit",
+          number: "{{totalbloodunit}}",
+        },
+      ];
+      const BottomBoxes = document.querySelector("#bottom-Boxes");
+      const BottomBoxesHtml = BottomData.map(
+        (BottomData) =>
+          `<div class="ag-courses_item">
+      <a href="#" class="ag-courses-item_link">
+        <div class="ag-courses-item_bg" style="background-color: ${BottomData.color};"></div>
+
+        <div class="ag-courses-item_title" id="BottomIcon">${BottomData.icon}</div>
+
+        <div class="ag-courses-item_date-box" id="BottomTitle">
+          ${BottomData.title} <span class="ag-courses-item_date">${BottomData.number}</span>
+        </div>
+      </a>
+    </div>
+  `
+      ).join("");
+
+      BottomBoxes.innerHTML = BottomBoxesHtml;
+    </script>
+  </body>
+</html>
+{% endblock content %}

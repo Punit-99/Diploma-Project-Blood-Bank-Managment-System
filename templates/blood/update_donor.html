@@ -1,0 +1,90 @@
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- CSS -->
+     <link href="{% static "css/master.css "%}"rel="stylesheet" media="all">
+     <style>
+        .donateBlood {
+          margin: 0;
+          padding: 50px 0;
+        }
+  
+        @media only screen and (max-width: 425px) {
+          .registerDonateBlood {
+            box-shadow: none;
+          }
+          .select {
+            min-width: 160px;
+          }
+        }
+  
+        @media only screen and (min-width: 767px) and (max-width: 801px) {
+          .select {
+            width: 15rem;
+          }
+        }
+      </style>
+</head>
+<body>
+    <!-- ===TOP-SECTION==== -->
+    <div class="head-title">
+      <div class="left">
+        <h1>Update Donor</h1>
+      </div>
+    </div>
+    <!-- ====BOTTOM_SECTION=== -->
+    <div class="loginForm-container donateBlood">
+      <form
+        class="SignUpForm registerDonateBlood"
+        method="POST"
+        autocomplete="off"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Update Donor</h3>
+
+        <label for="unit">First Name</label>
+        {% render_field userForm.first_name|attr:'required:true'  class="inputSection"  %}
+        <label for="unit">Last Name</label>
+        {% render_field userForm.last_name|attr:'required:true'  class="inputSection"  %}
+        <label for="unit">Username</label>
+        {% render_field userForm.username|attr:'required:true'  class="inputSection"  %}
+        <label for="unit">Password</label>
+        {% render_field userForm.password|attr:'required:true'  class="inputSection"  %}
+        
+        <label for="bloodGroup">Blood Group</label>
+        <div class="select">
+          <select class="bloodSelector" name="bloodgroup">
+            <option disabled="disabled" selected="selected">
+              Choose option
+            </option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+          </select>
+        </div>
+
+        <label for="unit">Address</label>
+        {% render_field donorForm.address|attr:'required:true'  class="inputSection"  %}
+        <label for="unit">Mobile</label>
+        {% render_field donorForm.mobile|attr:'required:true'  class="inputSection"  %}
+        <label for="unit">Profile Pic</label>
+        {% render_field donorForm.profile_pic|attr:'required:true'  class="inputSection"  %}
+
+        <button class="Login-button">Update</button>
+      </form>
+    </div>
+</body>
+</html>
+{% endblock content %}

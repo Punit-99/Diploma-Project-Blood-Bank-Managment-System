@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="work-section-wrapper">
+      <div class="work-section-top">
+        <h1 class="primary-heading">Words of Inspiration</h1>
+        <p class="primary-text">
+          Inspirational quotes about blood donation, a reminder of the
+          significance of this selfless act encourage people to donate blood,
+          emphasizing that every single donation can make a difference in
+          someone's life. Reminding people that they are the unsung heroes who
+          make the world a better place by donating blood.
+        </p>
+      </div>
+
+      <div class="testimonial-section-bottom"></div>
+      <div class="pagination-container"></div>
+    </div>
+
+    <script>
+      const quotes = [
+        {
+          quotes:
+            "The blood you donate gives someone another chance at life. One day that someone may be a close relative, a friend, a loved one—or even you.",
+          credit: " -Unknown",
+        },
+        {
+          quotes:
+            "Blood donation is the highest form of humanitarianism, it saves lives and improves health.",
+          credit: "-Dr. Margaret Chan",
+        },
+
+        {
+          quotes:
+            "Blood is the most precious gift that anyone can give to another person — the gift of life.",
+          credit: " -Unknown",
+        },
+        {
+          quotes:
+            "Blood donation is an act of solidarity. It is an act of love towards one's neighbor.",
+          credit: "-Pope Francis",
+        },
+      ];
+
+      // Get the container element where the testimonials will be added
+      const testimonialsContainer = document.querySelector(
+        ".testimonial-section-bottom"
+      );
+
+      // Define the current quote index
+      let currentQuoteIndex = 0;
+
+      // Function to render a quote
+      // Function to render a quote
+      function renderQuote(index) {
+        const quote = quotes[index];
+        // Create the HTML elements for the quote
+        const quoteElem = document.createElement("div");
+        quoteElem.classList.add("testimonial-section-bottom");
+        quoteElem.innerHTML = `
+    <span>${quote.quotes}</span>
+    <h2>${quote.credit}</h2>
+    <img id='gg' src="static/SVGIcons/QuoteshorizontalLine.svg" alt="" />
+  `;
+        // Remove any existing quotes from the container
+        testimonialsContainer.innerHTML = "";
+        // Add the quote to the container
+        testimonialsContainer.appendChild(quoteElem);
+      }
+
+      // Function to show the next quote
+      function showNextQuote() {
+        currentQuoteIndex++;
+        if (currentQuoteIndex >= quotes.length) {
+          currentQuoteIndex = 0;
+        }
+        renderQuote(currentQuoteIndex);
+        renderPaginationDots();
+      }
+
+      // Render the first quote
+      renderQuote(currentQuoteIndex);
+
+      // Auto slide the quotes every 5 seconds
+      setInterval(showNextQuote, 3000);
+
+      // Function to render pagination dots
+      function renderPaginationDots() {
+        const paginationContainer = document.querySelector(
+          ".pagination-container"
+        );
+        paginationContainer.innerHTML = "";
+        for (let i = 0; i < quotes.length; i++) {
+          const dotElem = document.createElement("span");
+          dotElem.classList.add("pagination-dot");
+          if (i === currentQuoteIndex) {
+            dotElem.classList.add("active");
+          }
+          paginationContainer.appendChild(dotElem);
+        }
+      }
+
+      // Render pagination dots
+      renderPaginationDots();
+    </script>
+  </body>
+</html>

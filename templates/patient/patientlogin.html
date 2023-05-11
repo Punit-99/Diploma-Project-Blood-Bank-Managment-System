@@ -1,0 +1,38 @@
+{%load static%} {% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link href="{% static "css/master.css "%}"rel="stylesheet" media="all">
+  </head>
+  <body id="app">
+    {% include "blood/navbar.html" %}
+    <div class="loginForm-container">
+      <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <form class="loginForm" method="POST">
+        {% csrf_token %}
+        <h3>Patient Login</h3>
+
+        <label for="username">Username</label>
+          {% render_field form.username class="inputSection" type="text" placeholder="username" id="username" %}
+    
+
+        <label for="password">Password</label>
+          {% render_field form.password class="inputSection"  placeholder="Password" type="password"  id="password" %}
+       
+
+        <button class="Login-button">Log In</button>
+        <div class="social">
+          <p>Does not have an account ?</p>
+          <p><a href="/patient/patientsignup">Click here to register</a></p>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

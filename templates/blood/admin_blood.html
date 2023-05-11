@@ -1,0 +1,378 @@
+{% extends 'blood/adminbase.html' %} {% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #content main .head-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        grid-gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      #content main .head-title .left h1 {
+        font-size: 36px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--dark);
+      }
+
+      /* =====MID-SECTION====== */
+      .ag-format-container {
+        margin: 0 auto;
+      }
+
+      .ag-courses_box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 50px 0;
+      }
+
+      .ag-courses_item {
+        flex-basis: calc(45.33% - 205px);
+
+        margin: 0 15px 30px;
+
+        overflow: hidden;
+
+        border-radius: 28px;
+      }
+
+      .ag-courses-item_link {
+        display: block;
+        padding: 30px 20px;
+        background-color: #121212;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .ag-courses-item_link:hover,
+      .ag-courses-item_link:hover .ag-courses-item_date {
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .ag-courses-item_link:hover .ag-courses-item_bg {
+        -webkit-transform: scale(10);
+        -ms-transform: scale(10);
+        transform: scale(10);
+      }
+
+      .ag-courses-item_title {
+        min-height: 87px;
+        margin: 0 0 25px;
+
+        overflow: hidden;
+
+        font-weight: bold;
+        font-size: 2.5rem;
+        color: #fff;
+
+        z-index: 2;
+        position: relative;
+      }
+
+      .ag-courses-item_date-box {
+        font-size: 18px;
+        color: #fff;
+
+        z-index: 2;
+        position: relative;
+      }
+
+      .ag-courses-item_date {
+        font-weight: bold;
+        color: #f9b234;
+
+        -webkit-transition: color 0.5s ease;
+        -o-transition: color 0.5s ease;
+        transition: color 0.5s ease;
+      }
+
+      .ag-courses-item_bg {
+        height: 128px;
+        width: 128px;
+
+        z-index: 1;
+        position: absolute;
+        top: -75px;
+        right: -75px;
+
+        border-radius: 50%;
+
+        -webkit-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+      }
+
+      @media only screen and (max-width: 979px) {
+        .ag-courses_item {
+          -ms-flex-preferred-size: calc(50% - 30px);
+          flex-basis: calc(50% - 30px);
+        }
+
+        .ag-courses-item_title {
+          font-size: 24px;
+        }
+      }
+
+      @media only screen and (max-width: 767px) {
+        .ag-format-container {
+          width: 96%;
+        }
+      }
+
+      @media only screen and (max-width: 639px) {
+        .ag-courses_item {
+          -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
+        }
+
+        .ag-courses-item_title {
+          min-height: 72px;
+          line-height: 1;
+
+          font-size: 24px;
+        }
+
+        .ag-courses-item_link {
+          padding: 22px 40px;
+        }
+
+        .ag-courses-item_date-box {
+          font-size: 16px;
+        }
+      }
+
+      /* ===========BOTTOM-ICON============= */
+      #BottomIcon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #BottomTitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        font-size: 14.3px;
+      }
+
+      .BloodStockUpdate > label {
+        display: block;
+        margin-top: 30px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      /* =========== */
+      .Blood-update-form-section {
+        display: flex;
+        justify-content: center;
+      }
+      .stock-title {
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+        color: var(--dark);
+      }
+      .BloodStockUpdate-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .bloodSelector {
+        appearance: none;
+        outline: 0;
+        border: 0;
+        box-shadow: none;
+        flex: 1;
+        padding: 0 1em;
+        color: black;
+        background-color: rgba(255, 255, 255, 0.07);
+        background-image: none;
+        cursor: pointer;
+      }
+      .bloodSelector::-ms-expand {
+        display: none;
+      }
+      .select {
+        margin-bottom: 0.5rem;
+        margin-top: 8px;
+        position: relative;
+        display: flex;
+        width: 20rem;
+        height: 3rem;
+        border-radius: 3px;
+        overflow: hidden;
+        background: rgba(145, 145, 145, 0.626);
+      }
+      /* Arrow */
+      .select::after {
+        content: "\25BC";
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 1em;
+        background-color: rgba(255, 255, 255, 0.07);
+        transition: 0.25s all ease;
+        pointer-events: none;
+      }
+      /* Transition */
+      .select:hover::after {
+        color: #f39c12;
+      }
+      .field-and-button-holder {
+        margin-bottom: 10rem;
+        display: flex;
+        align-items: center;
+      }
+      .update-blood-input {
+        margin-right: 20px;
+        box-shadow: none;
+        padding: 0 1em;
+        color: black;
+        outline: 0;
+        border: 0;
+        height: 2rem;
+        border-radius: 3px;
+        overflow: hidden;
+        background: rgba(145, 145, 145, 0.626);
+      }
+      .update-blood-input::placeholder {
+        color: #080710;
+      }
+
+      .update-button {
+        background-color: #ffffff;
+        color: #080710;
+        height: 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        padding: 10px;
+        background: rgba(145, 145, 145, 0.626);
+      }
+
+      .update-button:hover{
+        color: #f39c12;
+      }
+
+      @media only screen and (max-width: 425px) {
+       .select{
+        width: 13rem;
+       }
+       .field-and-button-holder{
+        flex-direction: column;
+       }
+       .update-blood-input{
+        margin: 0 0 10px 0;
+       }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===TOP-SECTION==== -->
+    <div class="head-title">
+      <div class="left">
+        <h1>Blood Stock</h1>
+      </div>
+    </div>
+    <!-- ===MID_SECTION==== -->
+    <div class="ag-format-container">
+      <div class="ag-courses_box" id="upper-Boxes">
+        <!-- code injected here -->
+      </div>
+    </div>
+    <!-- ====BOTTOM_SECTION=== -->
+    <div class="head-title">
+      <div class="left">
+        <h1>Update Blood Unit</h1>
+      </div>
+    </div>
+    <div class="Blood-update-form-section">
+      <form class="BloodStockUpdate-form" method="POST">
+        {% csrf_token %}
+        <div class="select">
+          <select class="bloodSelector" name="bloodgroup">
+            <option disabled="disabled" selected="selected">
+              Choose Blood Group
+            </option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+          </select>
+        </div>
+        <div class="field-and-button-holder">
+          <input
+            autocomplete="off"
+            type="text"
+            name="unit"
+            placeholder="Unit"
+            class="update-blood-input"
+          />
+          <button type="submit" class="update-button">Update</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const bloodTypes = [
+        { type: "A+", unit: "{{A1.unit}}", color: "#3ecd5e" },
+        { type: "B+", unit: "{{B1.unit}}", color: "#e44002" },
+        { type: "O+", unit: "{{O1.unit}}", color: "#952aff" },
+        { type: "AB+", unit: "{{AB1.unit}}", color: "#27E1C1" },
+        { type: "A-", unit: "{{A2.unit}}", color: "#EA5455" },
+        { type: "B-", unit: "{{B2.unit}}", color: "#0A2647" },
+        { type: "O-", unit: "{{O2.unit}}", color: "#5D6D7E" },
+        { type: "AB-", unit: "{{AB2.unit}}", color: "#FFAC41" },
+      ];
+
+      const bloodTypesList = document.querySelector("#upper-Boxes");
+
+      const bloodTypesHtml = bloodTypes
+        .map(
+          (bloodType) => `
+<div class="ag-courses_item">
+      <a href="#" class="ag-courses-item_link">
+        <div class="ag-courses-item_bg" style="background-color: ${bloodType.color};"></div>
+
+        <div class="ag-courses-item_title">${bloodType.type}</div>
+
+        <div class="ag-courses-item_date-box">
+          Unit: <span class="ag-courses-item_date">${bloodType.unit}</span>
+        </div>
+      </a>
+    </div>
+  `
+        )
+        .join("");
+
+      bloodTypesList.innerHTML = bloodTypesHtml;
+    
+    </script>
+  </body>
+</html>
+{% endblock content %}
