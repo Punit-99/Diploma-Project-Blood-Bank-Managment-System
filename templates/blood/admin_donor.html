@@ -1,4 +1,164 @@
-{% extends 'blood/adminbase.html' %} {% block content %} {%load static%}
+{% extends 'blood/adminbase.html' %} {% block content %} {%load static%} {% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #content main .head-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        grid-gap: 16px;
+        flex-wrap: wrap;
+      }
+      #content main .head-title .left h1 {
+        font-size: 36px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--dark);
+      }
+      /* ============ */
+
+      .ProfileCardConatiner {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 25px 0;
+      }
+      .card {
+        min-width: 355px;
+        max-width: 400px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        margin: 1rem;
+        padding: 1.5rem 0rem;
+      }
+
+      .profile-image img {
+        /* z-index: 1; */
+        /* width: 120px;
+        height: 120px; */
+        width: auto;
+        height: auto;
+        border-radius: 100px;
+        border: 10px solid #fff;
+        object-fit: cover;
+      }
+
+      .card-content h3 {
+        font-size: 1.3rem;
+        margin: 0;
+        text-align: center;
+      }
+      .card-content > p:nth-of-type(1) {
+        color: #dc3545;
+        font-size: 1.3rem;
+      }
+
+      .card-content p {
+        font-size: 1rem;
+        text-align: center;
+        padding-bottom: 0.3rem;
+      }
+
+      @media only screen and (max-width: 767px) {
+        .cardDetailCont {
+          flex-direction: column;
+        }
+
+        button {
+          width: 80px !important;
+        }
+
+        .ProfileCardConatiner {
+          padding: 0;
+        }
+      }
+
+      button {
+        padding: 0.7rem;
+        width: 100px;
+        background-color: #dc3545;
+        outline: none;
+        border: none;
+        border-radius: 5rem;
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: 600;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .card-btn-holder {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0.8rem 0 0 0;
+      }
+
+      .card-btn > a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .cardDetailCont {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+ 
+    <!-- ===TOP-SECTION==== -->
+    <div class="head-title">
+      <div class="left">
+        <h1>Donor</h1>
+      </div>
+    </div>
+      
+    <!-- ===MID_SECTION==== -->
+    <div class="ProfileCardConatiner">
+       {% for t in donors %}
+      <!--cards start-->
+      <div class="card">
+        <div class="cardDetailCont">
+          <div class="profile-image">
+            <img src="{ % static t.profile_pic.url % }" alt="donor Profile" />
+          </div>
+          <div class="card-content">
+            <h3>{{t.get_name}}</h3>
+            <p>{{t.bloodgroup}}</p>
+            <p>{{t.address}}</p>
+            <p>{{t.mobile}}</p>
+          </div>
+        </div>
+        <div class="card-btn-holder">
+          <button class="card-btn">
+            <a href="{% url 'update-donor' t.id  %}">EDIT</a>
+          </button>
+          <button class="card-btn">
+            <a href="{% url 'delete-donor' t.id  %}">DELETE</a>
+          </button>
+        </div>
+      </div>
+      <!--cards end-->
+         {% endfor %}
+    </div>
+ 
+  </body>
+</html>
+{% endblock content %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -131,10 +291,7 @@
       <div class="card">
         <div class="cardDetailCont">
           <div class="profile-image">
-            <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-              alt=""
-            />
+               <img src=" { % static t.profile_pic.url % } " alt="donor Profile" />
           </div>
           <div class="card-content">
             <h3>{{t.get_name}}</h3>
